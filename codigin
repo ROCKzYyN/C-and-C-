@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct funcionario{
+  int id;
+  char nome[41];
+  float salario;
+  struct funcionario *prev;
+  struct funcionario *next;
+}; 
+typedef struct funcionario Funcionario;
+
+Funcionario *deletID(int id, Funcionario *first){
+    Funcionario *aux;
+    for(aux = first; aux->id != id; aux = aux->next){
+        
+    }
+    aux -> next -> prev = aux -> prev;
+    aux -> prev -> next = aux -> next;
+    free(aux);
+    return first;
+}
+int main(){
+    Funcionario *first=NULL,*aux,*last=NULL,*f;
+    int qtdFunc;
+    int i;
+    int idDeleta;
+    printf("Quantia de Funcionarios: ");
+    scanf("%d",&qtdFunc);
+    
+    for(i=0;i!=qtdFunc;i++){
+        int escolha;
+        int id;
+        char name[41];
+        float salario;
+        
+        
+        
+        
+        
+        f=malloc(sizeof(Funcionario));
+        printf("ID: ");
+        scanf("%d",&id);
+    
+        printf("Nome :");
+        scanf("%s",name);
+        
+        printf("Salario: ");
+        scanf("%f",&salario);
+        
+        f->id=id;
+        strcpy(f->nome,name);
+        f->salario=salario;
+    
+        f -> prev = NULL;
+        f -> next = NULL;
+        
+        printf("Começar por onde\n [1 para inicio\n 2 para final]\n");
+        scanf("%d",&escolha);
+        
+        if(escolha==1){
+            if(first==NULL){
+                first =f;
+                last =f;
+                
+            }else{
+                f -> next = first;
+                first -> prev = f;
+                first = f;
+            }
+            
+        }else{
+            if(first==NULL){
+                first =f;
+                last =f;
+                
+            }else{
+                f -> prev =last;
+                last -> next =f;
+                f = last;
+            }
+            
+        }
+    
+        
+    }
+    
+    for(aux=first; aux!=NULL; aux = aux->next){
+        printf("ID:%d \n Nome:%s \n Salario: %.2f \n", aux->id,aux->nome,aux->salario);
+    }
+    
+    printf("Digite o ID para ser excluido: ");
+    scanf("%d",&idDeleta);
+    
+    deletID(idDeleta, first);
+    
+    for(aux=first; aux!=NULL; aux = aux->next){
+        printf("ID:%d \n Nome:%s \n Salario: %.2f \n", aux->id,aux->nome,aux->salario);
+    }
+}
+
